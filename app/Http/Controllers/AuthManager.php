@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session; // Correct import statement
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Password;
+
+
+
 
 class AuthManager extends Controller
 {
@@ -20,6 +24,35 @@ class AuthManager extends Controller
     {
         return view('registration');
     }
+    public function forgotPassword()
+    {
+        return view('forgotPassword');
+    }
+    
+    
+    
+    public function forgotPasswordPost(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+    ]);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    if ($status === Password::RESET_LINK_SENT) {
+        return back()->with(['status' => 'Password reset link has been sent to the provided email address.']);
+    }
+
+    if (str_contains($status, 'seconds')) {
+        return back()->withErrors(['email' => 'Please wait before retrying.']);
+    }
+
+    return back()->withErrors(['email' => __($status)]);
+}
+
+
 
     public function loginPost(Request $request)
     {
@@ -65,4 +98,18 @@ class AuthManager extends Controller
 
         return redirect(route('home'));
     }
+    public function courses()
+    {
+        $courses = course::all();
+        return view('courses', compact('courses'));
+    }
+    public function enrolledCourses()
+    {
+    return view('enrolledCourses');
+    }
+
+
+
+
 }
+

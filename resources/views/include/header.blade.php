@@ -7,11 +7,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                 @auth
+                    
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                        <a class="nav-link" href="{{ route('enrolledCourses') }}">Enrolled Courses</a>
                     </li>
+                    
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
@@ -21,11 +22,18 @@
                     </li>
                 @endauth
             </ul>
-            <span class="navbar-text">
+            <span class="navbar-nav">
                 @auth
-                    {{ auth()->user()->name }}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                </li>
                 @endauth
             </span>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('courses') }}">Browse Courses</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
