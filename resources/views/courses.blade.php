@@ -12,7 +12,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{$course->Name}}</h5>
                             <p class="card-text">{{$course->description}}</p>
-                            <a href="#" class="btn btn-primary">Enroll Now</a>
+                            <a href="{{ route('processPayment') }}" class="btn btn-primary">Enroll Now</a>
                         </div>
                     </div>
                 </div>

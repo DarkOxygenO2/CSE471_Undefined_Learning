@@ -19,11 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/forgotPassword', [AuthManager::class, 'forgotPassword'])->name('forgotPassword');
-Route::post('/forgotPassword', [AuthManager::class, 'forgotPasswordPost'])->name('forgotPassword.post');
+Route::get('/resetPassword', [AuthManager::class, 'resetPassword'])->name('resetPassword');
+Route::post('/resetPassword', [AuthManager::class, 'resetPasswordPost'])->name('resetPassword.post');
 
 
-Route::get('/courses', [AuthManager::class, 'courses'])->name('courses'); // New route for courses
+Route::get('/courses', [AuthManager::class, 'courses'])->name('courses');
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,4 +32,6 @@ Route::get('/', function () {
 
 Route::get('/enrolled-courses', [AuthManager::class, 'enrolledCourses'])->name('enrolledCourses');
 
-Route::get('/courses/{courseCode}', [CourseController::class, 'view'])->name('viewCourse');
+
+Route::get('/process-payment', [AuthManager::class, 'processPayment'])->name('processPayment');
+

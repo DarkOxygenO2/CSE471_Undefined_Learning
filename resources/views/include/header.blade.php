@@ -27,6 +27,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                 </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('resetPassword') }}"> Reset Password</a>
+                </li>
                 @endauth
             </span>
             <ul class="navbar-nav">

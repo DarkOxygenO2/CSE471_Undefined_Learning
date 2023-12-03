@@ -24,33 +24,31 @@ class AuthManager extends Controller
     {
         return view('registration');
     }
-    public function forgotPassword()
+    public function resetPassword()
     {
-        return view('forgotPassword');
+        return view('resetPassword');
     }
     
     
     
-    public function forgotPasswordPost(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-    ]);
+    public function resetPasswordPost(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'current_password' => 'required',
+            'new_password' => 'required',
+        ]);
 
-    $status = Password::sendResetLink(
-        $request->only('email')
-    );
+        $user = User::where('email', $request->email)->first();
 
-    if ($status === Password::RESET_LINK_SENT) {
-        return back()->with(['status' => 'Password reset link has been sent to the provided email address.']);
+        if (!$user || !Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Invalid current password.']);
+        }
+
+        $user->update(['password' => bcrypt($request->new_password)]);
+
+        return back()->with(['status' => 'Password updated successfully.']);
     }
-
-    if (str_contains($status, 'seconds')) {
-        return back()->withErrors(['email' => 'Please wait before retrying.']);
-    }
-
-    return back()->withErrors(['email' => __($status)]);
-}
 
 
 
@@ -108,6 +106,11 @@ class AuthManager extends Controller
     return view('enrolledCourses');
     }
 
+    public function processPayment()
+    {
+        return view('processPayment');
+    }
+   
 
 
 

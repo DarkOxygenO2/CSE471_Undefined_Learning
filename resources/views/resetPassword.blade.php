@@ -1,9 +1,9 @@
 @extends('layout')
-@section('title', 'Forgot Password')
+@section('title', 'Reset Password')
 @section('content')
 <div class="container">
     <div class="mt-5">
-        <h2>Forgot Password</h2>
+        <h2>Reset Password</h2>
 
         @if(session('status'))
             <div class="alert alert-success">{{ session('status') }}</div>
@@ -17,23 +17,25 @@
             </div>
         @endif
 
-        <form action="{{ route('forgotPassword.post') }}" method="POST" class="ms-auto me-auto mt-auto" style="width: 500px">
+        <form action="{{ route('resetPassword.post') }}" method="POST" class="ms-auto me-auto mt-auto" style="width: 500px">
             @csrf
             <div class="mb-3">
                 <label class="form-label">Email address</label>
                 <input type="email" class="form-control" name="email" id="emailInput">
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="showMessage()">Send Password Reset Link</button>
+            <div class="mb-3">
+                <label class="form-label">Current Password</label>
+                <input type="password" class="form-control" name="current_password">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">New Password</label>
+                <input type="password" class="form-control" name="new_password">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Reset Password</button>
         </form>
     </div>
 </div>
-
-<script>
-    function showMessage() {
-        var email = document.getElementById('emailInput').value;
-        alert('Password reset link has been sent to the email address: ' + email);
-    }
-</script>
-
 @endsection
