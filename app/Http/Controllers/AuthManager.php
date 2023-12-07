@@ -96,21 +96,4 @@ class AuthManager extends Controller
 
         return redirect(route('home'));
     }
-    public function courses()
-    {
-        $courses = course::all();
-        return view('courses', compact('courses'));
-    }
-    public function enrolledCourses()
-    {
-    return view('enrolledCourses');
-    }
-
-    public function processPayment()
-    {
-        return view('processPayment');
-    }
-    
-
 }
-
