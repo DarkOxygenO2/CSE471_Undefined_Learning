@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session; // Correct import statement
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Password;
+
+
+
 
 class AuthManager extends Controller
 {
@@ -20,6 +24,33 @@ class AuthManager extends Controller
     {
         return view('registration');
     }
+    public function resetPassword()
+    {
+        return view('resetPassword');
+    }
+    
+    
+    
+    public function resetPasswordPost(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'current_password' => 'required',
+            'new_password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Invalid current password.']);
+        }
+
+        $user->update(['password' => bcrypt($request->new_password)]);
+
+        return back()->with(['status' => 'Password updated successfully.']);
+    }
+
+
 
     public function loginPost(Request $request)
     {
@@ -65,4 +96,21 @@ class AuthManager extends Controller
 
         return redirect(route('home'));
     }
+    public function courses()
+    {
+        $courses = course::all();
+        return view('courses', compact('courses'));
+    }
+    public function enrolledCourses()
+    {
+    return view('enrolledCourses');
+    }
+
+    public function processPayment()
+    {
+        return view('processPayment');
+    }
+    
+
 }
+

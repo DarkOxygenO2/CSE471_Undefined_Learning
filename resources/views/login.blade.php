@@ -30,8 +30,10 @@
                 <label class="form-label">Password</label>
                 <input type="password" class="form-control" name="password">
             </div>
-  
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            
         </form>
     </div>
 </div>
