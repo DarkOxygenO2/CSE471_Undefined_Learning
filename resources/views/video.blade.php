@@ -129,7 +129,8 @@
 
     <div id="feedbackForm">
         <h2>Feedback Form</h2>
-        <button type="button" id="submitFeedback" onclick="submitFeedback()">Submit Feedback</button>
+        <textarea id="feedbackText" placeholder="Write your feedback..." oninput="enableSubmitButton()"></textarea>
+        <button type="button" id="submitFeedback" onclick="submitFeedback()" disabled>Submit Feedback</button>
     </div>
 
     <script>
@@ -146,6 +147,12 @@
             document.getElementById('feedbackForm').style.display = 'block';
         }
 
+        function enableSubmitButton() {
+            var feedbackText = document.getElementById('feedbackText').value;
+            var submitFeedbackButton = document.getElementById('submitFeedback');
+            submitFeedbackButton.disabled = feedbackText.trim() === ''; 
+        }
+
         function submitFeedback() {
             alert('Feedback submitted!');
             document.getElementById('feedbackForm').style.display = 'none';
@@ -153,9 +160,9 @@
     </script>
     @else
         <center>
-        <div class="d-flex justify-content-center align-items-center">
-            <h1 class="text-center display-4">To view video, you must log in</h1>
-        </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <h1 class="text-center display-4">To view the video, you must log in</h1>
+            </div>
         </center>
     @endauth
 
