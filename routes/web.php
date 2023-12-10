@@ -37,3 +37,27 @@ Route::get('/process-payment', [AuthManager::class, 'processPayment'])->name('pr
 
 Route::get('/video', [AuthManager::class, 'video'])->name('video');
 
+
+
+
+use App\Models\CourseEnrollment;
+use Illuminate\Support\Facades\DB;
+
+Route::get('/enroll-user', function () {
+    $user_id = 123;
+    $course_name = "Sample Course";
+    $course_description = "Description of the Sample Course";
+
+    try {
+        DB::table('course_enrollment')->insert([
+            'user_id' => $user_id,
+            'course_name' => $course_name,
+            'course_description' => $course_description,
+        ]);
+
+        return "User enrolled in the course successfully!";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
+
